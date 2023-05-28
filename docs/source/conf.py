@@ -94,8 +94,8 @@ master_doc = "index"
 # -- Options for myst_parser -------------------------------------------------
 # Specifies which of the parsers should handle each file extension.
 source_suffix = {
-    ".md": "myst-nb",
     ".ipynb": "myst-nb",
+    ".md": "myst-nb",
 }
 
 # Enables extensions to MyST parser that allows for richer markup options.
@@ -316,7 +316,7 @@ html_theme_options = {
     quantum software!',
     "repository_url": "https://github.com/unitaryfund/mitiq",
     "repository_branch": "master",
-    "use_source_button": True,
+    "use_source_button": False,
     "use_repository_button": True,
     "use_issues_button": True,
     "use_download_button": True,
@@ -325,6 +325,10 @@ html_theme_options = {
 }
 
 myst_update_mathjax = False
+
+nb_custom_formats = {
+  ".Rmd": ["jupytext.reads", {"fmt": "Rmd"}]
+}
 
 nbsphinx_custom_formats = {
     ".mystnb": ["jupytext.reads", {"fmt": "mystnb"}],

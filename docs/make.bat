@@ -7,8 +7,11 @@ REM Command file for Sphinx documentation
 if "%SPHINXBUILD%" == "" (
 	set SPHINXBUILD=sphinx-build
 )
-set SOURCEDIR=source
+set SOURCEDIR=_source
 set BUILDDIR=build
+
+REM Run generate_source.py script
+python generate_source.py
 
 if "%1" == "" goto help
 

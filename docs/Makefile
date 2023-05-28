@@ -14,7 +14,16 @@ help:
 
 .PHONY: help Makefile
 
+clean: Makefile
+	@if [ -d "_source/" ]; \
+	then \
+		echo "Removing docs/_source directory"; \
+		rm -rf "_source/"; \
+	fi
+	@$(SPHINXBUILD) -M $@ "_$(SOURCEDIR)" "$(BUILDDIR)" $(O)
+
 # Catch-all target: route all unknown targets to Sphinx using the new
 # "make mode" option.  $(O) is meant as a shortcut for $(SPHINXOPTS).
 %: Makefile
-	@$(SPHINXBUILD) -M $@ "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O) -W --keep-going
+	python generate_source.py
+	@$(SPHINXBUILD) -M $@ "_$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O) -W --keep-going
