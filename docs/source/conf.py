@@ -322,6 +322,9 @@ html_theme_options = {
     "use_download_button": True,
     "use_fullscreen_button": False,
     "path_to_docs": "docs/source",
+    "launch_buttons": {
+        "binderhub_url": "https://mybinder.org/"
+    }
 }
 
 myst_update_mathjax = False
