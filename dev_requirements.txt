@@ -1,12 +1,15 @@
 # Third-party integration.
-qiskit~=0.45.1
-qiskit-aer~=0.13.2
+qiskit~=1.0.1
+qiskit-aer~=0.13.3
 qiskit-ibm-provider~=0.10.0
+qiskit-ibm-runtime~=0.20.0
 pyquil~=3.5.4
 pennylane-qiskit~=0.35.1
 pennylane~=0.35.1
 amazon-braket-sdk~=1.69.0
 qibo==0.2.4 # TODO: unpin this
+
+ply==3.11
 
 # Unit tests, coverage, and formatting/style.
 pytest==8.0.0

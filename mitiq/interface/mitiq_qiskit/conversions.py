@@ -15,6 +15,7 @@ import cirq
 import numpy as np
 import qiskit
 from cirq.contrib.qasm_import import circuit_from_qasm
+from qiskit import qasm2
 
 from mitiq.utils import _simplify_circuit_exponents
 
@@ -100,7 +101,7 @@ def _map_qubits(
     Returns:
         The input ``qubits`` mapped to the ``new_registers``.
     """
-    indices = [bit.index for bit in qubits]
+    indices = [bit._index for bit in qubits]
     mapped_indices = [_map_bit_index(i, new_register_sizes) for i in indices]
     return [
         qiskit.circuit.Qubit(new_registers[i], j) for i, j in mapped_indices
@@ -132,7 +133,7 @@ def _add_identity_to_idle(
     idle_qubits = all_qubits - used_qubits
     # Modify input circuit applying I to idle qubits
     for q in idle_qubits:
-        circuit.i(q)
+        circuit.id(q)
 
     return idle_qubits
 
@@ -233,10 +234,13 @@ def _transform_registers(
     data = copy.deepcopy(circuit._data)
 
     # Remove the old qubits and add the new ones.
-    circuit._qubits = []
-    circuit._qubit_set = set()
+
+    # Making these changes causes the error in Qiskit's Rust code that
+    # suggests a different approach is needed
+    circuit.qubits.clear()
+    # circuit._qubit_set.clear()
     circuit.qregs = []
-    circuit._data = []
+    # circuit._data = qiskit.Cir
     circuit._qubit_indices = {}
     circuit.add_register(*new_qregs)
 
@@ -284,7 +288,7 @@ def from_qiskit(circuit: qiskit.QuantumCircuit) -> cirq.Circuit:
     Returns:
         Mitiq circuit representation equivalent to the input Qiskit circuit.
     """
-    return from_qasm(circuit.qasm())
+    return from_qasm(qasm2.dumps(circuit))
 
 
 def from_qasm(qasm: QASMType) -> cirq.Circuit:
